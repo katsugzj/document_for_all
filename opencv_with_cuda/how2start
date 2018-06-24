@@ -1,0 +1,24 @@
+# build opencv with cuda
+## 注意事项
+### 使用从opencv官网上下的包是不包含cuda模块的，需要自己重新编译
+### 推荐使用github上的项目来编译，个人尝试了好几个版本，只有github上编译的版本成功运行了
+### github上的samples里有很多很有用的例子
+## 环境建立过程
+### 1.先安装好cuda，确认显卡是否支持
+### 2.从github上clone opencv的项目
+### 3.下载安装cmake
+#### （1）cmake时有些组件需要下载，但是经常会下载失败，我只有github上的项目cmake成功下载所有的包（所以可能才有用吧）
+#### （2）如果configure时只是某些包没下，没有别的错误，可以在generate前手动下载（猜测没有影响）
+#### （3）下载位置在cmakelists中能找到
+#### （4）generate时勾选组件，网上说要确保不能勾build_cuda_stubs,没有验证
+#### （5）with_cuda一定要确保勾上，否则会出现no cuda support的情况
+#### （6）不过勾上我也出现了no cuda support的情况，应该是项目不完整的问题
+#### （7）最好勾上build_opencv_world这个包某人不勾但是涉及很多基本操作
+### 4.将cmake后得到的文件在vs中重新生成解决方案，这里费时很长，结束后再将CMaketargets的解决方案单独生成
+#### （1）库文件头文件都在得到的install文件中
+### 5.建立项目后在属性管理器中（最好使用x64运行），配置环境
+#### （1）属性管理器debug右键属性
+#### （2）VC++目录，包含目录中为cuda和opencv的include文件夹
+#### （3）库目录添加这两项的lib，dll文件
+#### （4）连接器，输入，依赖项将要用的lib文件写上去
+#### （5）编译环境时若说找不到dll文件，最简单粗暴的方法就是将dll文件放到，c:/windows/system32下，而且都是opencv开头比较好认
